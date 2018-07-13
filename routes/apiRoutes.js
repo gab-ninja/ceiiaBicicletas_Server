@@ -29,7 +29,10 @@ module.exports = app => {
 					name: dock.name,
 					slots: dock.slots,
 					numberOfBikes: dock.availableBicycles.length,
-					location: dock.location
+					location: {
+						latitude: dock.location.coordinates[1],
+						longitude: dock.location.coordinates[0]
+					}
 				};
 			});
 		} catch (error) {
