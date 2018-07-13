@@ -10,9 +10,7 @@ const Dock = mongoose.model('docks');
 
 const app = express();
 
-app.get('/populate', async (req, res) => {
-	res.send({ hi: 'there' });
-});
+require('./routes/apiRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

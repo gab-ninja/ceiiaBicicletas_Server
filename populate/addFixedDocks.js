@@ -1,4 +1,5 @@
-const docaCeiia = new Dock({
+module.exports = () => {
+	const docaCeiia = new Dock({
 		location: {
 			type: 'Point',
 			coordinates: [-8.679832220077515, 41.172266202587934]
@@ -32,3 +33,4 @@ const docaCeiia = new Dock({
 	} catch (err) {
 		console.log('[Server] '.magenta + 'ERROR on saving in DB');
 	}
+}
