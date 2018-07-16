@@ -42,10 +42,21 @@ module.exports = app => {
 	});
 
 	app.post('/api/unlockBicycle/:id', (req, res) => {
+		console.log('[API] '.yellow + `Bike unlock, dock: ${req.params.id}, distance ${JSON.stringify(req.body)}`);
 		res.send('Bicycle unlocked');
 	});
 
 	app.post('/api/malfunction', (req, res) => {
 		res.send('malfunction registed');
+	});
+
+	app.post('/api/callMobiDock', (req, res) => {
+		console.log(
+			'[API] '.yellow +
+				`Bike request recived { latitude: ${req.body.coords.latitude}, longitude: ${
+					req.body.coords.longitude
+				} }`
+		);
+		res.send('done :)');
 	});
 };
