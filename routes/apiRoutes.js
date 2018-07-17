@@ -51,9 +51,10 @@ module.exports = app => {
 	});
 
 	app.post('/api/callMobiDock', (req, res) => {
+		//TODO: check if theres any dock available near the user
 		console.log(
 			'[API] '.yellow +
-				`Bike request recived { latitude: ${req.body.coords.latitude}, longitude: ${
+				`MobiDock request recived { latitude: ${req.body.coords.latitude}, longitude: ${
 					req.body.coords.longitude
 				} }`
 		);
