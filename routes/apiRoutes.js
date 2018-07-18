@@ -3,6 +3,7 @@ const _ = require('lodash');
 require('colors');
 
 module.exports = app => {
+	const MIN_DIST_TO_DOCK = 150;
 	const Dock = mongoose.model('docks');
 
 	app.get('/populate', async (req, res) => {
@@ -50,14 +51,62 @@ module.exports = app => {
 		res.send('malfunction registed');
 	});
 
-	app.post('/api/callMobiDock', (req, res) => {
-		//TODO: check if theres any dock available near the user
+	app.post('/api/callMobiDock', async (req, res) => {
 		console.log(
 			'[API] '.yellow +
 				`MobiDock request recived { latitude: ${req.body.coords.latitude}, longitude: ${
 					req.body.coords.longitude
 				} }`
 		);
-		res.send('done :)');
+		if (await minDistCheck(req.body.coords.latitude, req.body.coords.longitude)) {
+			console.log('[API] '.yellow + 'done :)');
+			res.send('done :)');
+		} else {
+			console.log('[API] '.yellow + 'ERR: min distance failed');
+			res.send('min distance failed');
+		}
 	});
+
+	async function minDistCheck(carLat, carLong) {
+		docks = await Dock.find({});
+		try {
+			_.forEach(docks, dock => {
+				if (
+					distanceInKmBetweenEarthCoordinates(
+						dock.location.coordinates[1],
+						dock.location.coordinates[0],
+						carLat,
+						carLong
+					) *
+						1000 <
+					MIN_DIST_TO_DOCK
+				) {
+					throw 'err';
+				}
+			});
+			return true;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	function degreesToRadians(degrees) {
+		return (degrees * Math.PI) / 180;
+	}
+
+	function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
+		var earthRadiusKm = 6371;
+
+		var dLat = degreesToRadians(lat2 - lat1);
+		var dLon = degreesToRadians(lon2 - lon1);
+
+		lat1 = degreesToRadians(lat1);
+		lat2 = degreesToRadians(lat2);
+
+		var a =
+			Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+			Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		return earthRadiusKm * c;
+	}
 };

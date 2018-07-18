@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 require('./routes/apiRoutes')(app);
+require('./routes/mobiDockRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
