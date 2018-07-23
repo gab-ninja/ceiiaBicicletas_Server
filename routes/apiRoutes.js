@@ -3,7 +3,7 @@ const _ = require('lodash');
 require('colors');
 
 module.exports = app => {
-	const MIN_DIST_TO_DOCK = 150;
+	const MIN_DIST_TO_DOCK = require('../config/variables').MIN_DIST_TO_DOCK;
 	const Dock = mongoose.model('docks');
 
 	app.get('/populate', async (req, res) => {
@@ -11,6 +11,7 @@ module.exports = app => {
 	});
 
 	app.get('/api/listDock/:id', async (req, res) => {
+		console.log('[API] '.yellow + `CALL /api/listDock  id=${req.params.id}`);
 		var response = null;
 		try {
 			response = await Dock.findById(req.params.id);
@@ -21,6 +22,7 @@ module.exports = app => {
 	});
 
 	app.get('/api/getDockPositions', async (req, res) => {
+		console.log('[API] '.yellow + 'CALL /api/getDockPositions');
 		var docks = 'null';
 		try {
 			docks = await Dock.find({});
@@ -59,10 +61,18 @@ module.exports = app => {
 				} }`
 		);
 		if (await minDistCheck(req.body.coords.latitude, req.body.coords.longitude)) {
-			console.log('[API] '.yellow + 'done :)');
+			console.log(
+				'[API] '.yellow +
+					'done :)' +
+					`{ latitude: ${req.body.coords.latitude}, longitude: ${req.body.coords.longitude}`
+			);
 			res.send('done :)');
 		} else {
-			console.log('[API] '.yellow + 'ERR: min distance failed');
+			console.log(
+				'[API] '.yellow +
+					'ERR: min distance failed' +
+					`{ latitude: ${req.body.coords.latitude}, longitude: ${req.body.coords.longitude}`
+			);
 			res.send('min distance failed');
 		}
 	});

@@ -8,7 +8,7 @@ const dockSchema = new Schema({
 	},
 	name: String,
 	slots: Number,
-	availableBicycles: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+	availableBicycles: [{ type: Schema.Types.ObjectId, ref: 'Bike' }]
 });
 
 mongoose.model('docks', dockSchema);

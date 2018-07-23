@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const bicycleSchema = new Schema({
+const bikeSchema = new Schema({
 	location: {
 		type: { type: String },
 		coordinates: []
@@ -12,4 +12,4 @@ const bicycleSchema = new Schema({
 	isParked: Boolean
 });
 
-mongoose.model('bicycles', bicycleSchema);
+mongoose.model('bikes', bikeSchema);
