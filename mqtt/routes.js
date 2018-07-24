@@ -1,12 +1,13 @@
 module.exports = client => {
 	client.on('connect', function() {
-		client.subscribe('presence');
-		client.publish('presence', 'Hello mqtt');
+		client.subscribe('mobidock');
+		client.publish('mobidock', 'Hello mqtt');
 	});
 
 	client.on('message', function(topic, message) {
-		// message is Buffer
-		console.log(message.toString());
-		client.end();
+		console.log('[MQTT] '.green + `Msg recived on topic ${topic} => ${message.toString()}`);
+		//client.end();
 	});
+
+	//setInterval(() => client.publish('mobidock', 'New msg'), 2000);
 };
