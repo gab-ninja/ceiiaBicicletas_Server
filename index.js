@@ -1,8 +1,8 @@
 const express = require('express');
 const keys = require('./config/keys');
 const vars = require('./config/variables');
-require('colors');
 const bodyParser = require('body-parser');
+require('colors');
 
 const broker = require('./mqtt/broker');
 broker.init();
