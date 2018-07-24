@@ -1,3 +1,6 @@
 module.exports = {
-	MIN_DIST_TO_DOCK: 150
+	MIN_DIST_TO_DOCK: 150,
+	POPULATE: true,
+	MQTT_PORT: 1883,
+	SERVER_DEFAULT_PORT: 5000
 };

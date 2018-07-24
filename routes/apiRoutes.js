@@ -5,16 +5,31 @@ require('colors');
 module.exports = app => {
 	const MIN_DIST_TO_DOCK = require('../config/variables').MIN_DIST_TO_DOCK;
 	const Dock = mongoose.model('docks');
-
-	app.get('/populate', async (req, res) => {
-		res.send({ hi: 'there' });
-	});
+	const Bike = mongoose.model('bikes');
 
 	app.get('/api/listDock/:id', async (req, res) => {
 		console.log('[API] '.yellow + `CALL /api/listDock  id=${req.params.id}`);
 		var response = null;
 		try {
 			response = await Dock.findById(req.params.id);
+			//response.availableBicycles = [13, 13, 13, 13];
+			response['availableBicycles'] = [13, 13, 13, 13];
+			//response = Object.assign({availableBicycles: [13,13,13,13,13]})
+			console.log(response);
+			// response.availableBicycles = _.mapValues(response.availableBicycles, bike => {
+			// 	return 13;
+			// });
+		} catch (err) {
+			console.log('[API] '.yellow + `ERROR on fetching dock  ${err}`);
+		}
+		res.send(response);
+	});
+
+	app.get('/api/listBikes', async (req, res) => {
+		console.log('[API] '.yellow + `CALL /api/listBikes `);
+		var response = null;
+		try {
+			response = await Bike.find({});
 		} catch (err) {
 			console.log('[API] '.yellow + `ERROR on fetching dock  ${req.params.id}`);
 		}
