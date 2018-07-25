@@ -1,7 +1,7 @@
 module.exports = client => {
 	client.on('connect', function() {
 		client.subscribe('mobidock');
-		//client.publish('mobidock', 'Hello mqtt');
+		client.publish('mobidock', 'Hello mqtt');
 	});
 
 	client.on('message', function(topic, message) {
@@ -9,5 +9,5 @@ module.exports = client => {
 		//client.end();
 	});
 
-	setInterval(() => client.publish('mobidock', 'New msg'), 4000);
+	setInterval(() => client.publish('mobidock', 'New msg'), 10000);
 };
