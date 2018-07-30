@@ -11,6 +11,11 @@ module.exports = app => {
 			res.send('Bikes populated');
 		});
 
+		app.put('/populate/mobidocks', async (req, res) => {
+			await require('../populate/addMobiDocks');
+			res.send('MobiDocks populated');
+		});
+
 		app.put('/populate/test', async (req, res) => {
 			try {
 				const response = await axios.get('http://192.168.1.153:3000', { ola: 'mundo' });

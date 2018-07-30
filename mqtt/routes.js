@@ -9,5 +9,5 @@ module.exports = client => {
 		//client.end();
 	});
 
-	setInterval(() => client.publish('mobidock', 'New msg'), 10000);
+	//setInterval(() => client.publish('mobidock', 'New msg'), 10000);
 };
