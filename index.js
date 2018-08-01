@@ -21,10 +21,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+var coordinates = [41.172120835218664, -8.67996633052826];
+
 require('./routes/apiRoutes')(app);
-require('./routes/mobiDockRoutes')(app);
+require('./routes/mobiDockRoutes')(app, coordinates);
 require('./routes/populateRoutes')(app);
-require('./mqtt/routes')(client);
+require('./mqtt/routes')(client, coordinates);
 
 const PORT = process.env.PORT || vars.SERVER_DEFAULT_PORT;
 app.listen(PORT, () => {
