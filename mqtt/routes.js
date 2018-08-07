@@ -2,6 +2,8 @@ const _ = require('lodash');
 module.exports = (client, coordinates) => {
 	client.on('connect', function() {
 		client.subscribe('mobidock');
+		client.subscribe('mobidockPos');
+		client.subscribe('phoneCommands');
 		client.publish('mobidock', 'Hello mqtt');
 	});
 
@@ -18,5 +20,5 @@ module.exports = (client, coordinates) => {
 		}
 	});
 
-	//setInterval(() => client.publish('mobidock', 'New msg'), 10000);
+	//setInterval(() => client.publish('mobidock', 'New msg'), 5000);
 };

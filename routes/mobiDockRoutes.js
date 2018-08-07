@@ -3,7 +3,7 @@ const _ = require('lodash');
 const axios = require('axios');
 require('colors');
 
-module.exports = (app, coordinates) => {
+module.exports = (app, coordinates, client) => {
 	//const Dock = mongoose.model('docks');
 	app.get('/mobidock/map', (req, res) => {
 		const lat = coordinates[0];
@@ -40,5 +40,11 @@ module.exports = (app, coordinates) => {
 			console.log(err);
 		}
 		res.send('Position recived :)');
+	});
+
+	app.post('/mobidock/phoneDirections', (req, res) => {
+		console.log('[MobiDock] '.yellow + JSON.stringify(req.body));
+		client.publish('phoneCommands', JSON.stringify(req.body));
+		res.send('recived');
 	});
 };
